@@ -85,7 +85,7 @@
         <input
           v-model="roomCode"
           type="text"
-          placeholder="내용을 입력해주세요."
+          placeholder="방장 아이디를 입력해주세요."
         />
         <div class="material-icons">search</div>
       </div>
@@ -132,7 +132,8 @@ export default {
       showWithModal: false,
       showSearchModal: false,
       searchTitle: "",
-      joinGroupId: "",
+      // joinGroupId: "",
+      joinGroupId: 0,    // diary_group_id
       searchData: [],
       userId: "testUser", // sessionId를 userId로 대체
       recordingTest: null,
@@ -146,7 +147,8 @@ export default {
       publisher: undefined,
       subscribers: [],
       // sessionId: 'SessionA',
-      roomCode: "", // roomCode는 방을 만든 사람의 userId값
+      // roomCode: "", // roomCode는 방을 만든 사람의 userId값
+      roomCode: this.userId,
       myName: "테스트 유저",
     };
   },
@@ -185,6 +187,10 @@ export default {
       this.openRecording = !this.openRecording;
       this.joinSession(this.roomCode);
 
+      console.log("---------roomCode----------");    
+      console.log(this.roomCode);
+      console.log("---------roomCode----------");
+
       // this.productList = await this.api("/sample", "post", {
       //   userId: this.userId,
       // });
@@ -194,7 +200,24 @@ export default {
      * 함께쓰기 방 생성 함수
      */
     createRoom() {
+      axios
+        .post(
+          `http://localhost:8080/api/diaryGroup`,
+          { }
+        )
+        .then((data) => {
+          // 방 생성하면서 groupId 생성 -> 저장해놓고 같은 그룹 사람들에게 같은 값 적용해야함
+          this.joinGroupId = data.data.groupId;
+          console.log("---------joinGroupId22222222----------");
+          console.log(this.joinGroupId);
+        });
+      
       this.joinSession(this.userId);
+
+      console.log("---------joinGroupId----------");
+      console.log(this.joinGroupId);
+      console.log("---------joinGroupId----------");
+
     },
     /* Openvidu API 시작 */
     joinSession(roomCode) {
@@ -278,6 +301,25 @@ export default {
             );
           });
       });
+    console.log("join")
+      this.session
+        .signal({
+          data: "My custom message", // Any string (optional)
+          to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+          type: "my-chat", // The type of message (optional)
+        })
+        .then(() => {
+          console.log("Message successfully sent");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      this.session.on('signal', (event) => {
+        console.log(event.data); // Message
+        console.log(event.from); // Connection object of the sender
+        console.log(event.type); // The type of message
+    });
 
       window.addEventListener("beforeunload", this.leaveSession);
     },
@@ -335,7 +377,7 @@ export default {
           this.leaveSession();
           axios
             .get(
-              `https://563995ec-77a8-4f3f-bc66-956833ef5018.mock.pstmn.io/diary/1`
+              `https://045d5080-b0f3-4dd5-9240-aee771955f6d.mock.pstmn.io/diary/1`
             )
             .then((response) => {
               this.diaryContent = response.data;
