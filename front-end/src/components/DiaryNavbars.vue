@@ -178,7 +178,11 @@ export default {
     moveLogin () {
       this.openSignup = !this.openSignup
       this.openLogin = !this.openLogin
-    }
+    },
+        logout() {
+      this.$store.commit("logInId", "");
+    },
+
   },
   beforeUnmount() {
     this.$router.go();
