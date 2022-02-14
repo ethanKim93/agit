@@ -48,7 +48,6 @@
 
 <script>
 import { computed, reactive } from 'vue'
-import { useStore } from 'vuex'
 import axios from 'axios'
 
 export default {

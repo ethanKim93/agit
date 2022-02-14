@@ -34,7 +34,7 @@
     <diary-list-item
       class="result"
       v-for="diary in diarys"
-      :key="diary.diary_id"
+      :key="diary.diaryId"
       :diary="diary"
     />
     <InfiniteLoading :diarys="diarys" @infinite="load" />
@@ -87,15 +87,25 @@ const load = async ($state) => {
   console.log(store.state.userId);
   try {
     const response = await fetch(
+<<<<<<< HEAD
       `https://api/diary/list?userId=${store.state.userId}&diarypage=` +
+=======
+      `http://localhost:8080/api/diary/list?userId=${store.state.userId}&diaryPage=` +
+>>>>>>> a9206a8edd463e2db6465dddcf0a7eb6b431bec2
         page
     );
     const json = await response.json();
     console.log(json);
     if (json.length < 10) {
+<<<<<<< HEAD
       // $state.complete();
       diarys.value.push(...json);
     }
+=======
+         diarys.value.push(...json);
+        // $state.complete();
+      }
+>>>>>>> a9206a8edd463e2db6465dddcf0a7eb6b431bec2
     else {
       diarys.value.push(...json);
       $state.loaded();

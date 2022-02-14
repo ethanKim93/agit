@@ -4,7 +4,7 @@
     <template #left>     
       <div class="btnbox">  
         <va-navbar-item>
-          <router-link class="nav-link" to="/">아지트</router-link>
+          <router-link class="nav-link" to="/" style="font-size:25px">AZit</router-link>
         </va-navbar-item>
        </div>
     </template>
@@ -34,12 +34,29 @@
     </template>
 
     <template #right>
-      <va-navbar-item>
-          <va-button class="nav-link" @click="onOpenSignup" flat color="#ffffff">회원가입</va-button>
-      </va-navbar-item>
-      <va-navbar-item>
-          <va-button class="nav-link" @click="onOpenLogin" flat color="#ffffff">로그인</va-button>
-      </va-navbar-item>
+      <div v-if="$store.state.userId" class="row align-content--center">
+        <va-navbar-item style="margin: 0.5rem 0">
+          <div text="black text">로그인 계정 : {{ $store.state.userId }}</div>
+        </va-navbar-item>
+        <va-navbar-item style="margin: 0 1rem">
+          <va-button class="nav-link" @click="logout" flat color="#000000"
+            >로그아웃</va-button
+          >
+        </va-navbar-item>
+      </div>
+      <div v-else class="row">
+        <va-navbar-item>
+          <va-button class="nav-link" @click="onOpenSignup" flat color="#000000"
+            >회원가입</va-button
+          >
+        </va-navbar-item>
+        <va-navbar-item>
+          <va-button class="nav-link" @click="onOpenLogin" flat color="#000000"
+            >로그인</va-button
+          >
+        </va-navbar-item>
+      </div>
+
     </template>
   </va-navbar>
   <Login
@@ -61,10 +78,14 @@
   text-align: center;
   color: #2c3e50;
 }
+
 .btnbox{
   margin-left: 50px;
 }
 .btn2 {
+ 
+  transform: translateX(-50%);
+
   width: 120px;
   padding: 10px;
   /* border-radius: 20px; */
@@ -75,7 +96,7 @@
   text-align: center;
   cursor: pointer;
   margin: 20px 0;
-  background-color:rgb(0,0,0);
+  
   color: rgb(0, 0, 0);
   display: block;
   box-sizing: border-box;
@@ -85,9 +106,10 @@
 .btn2:hover {
 
   border-bottom: solid 2px;
-  border-bottom-color: rgb(0, 0, 0);
-  color: #000000;
+  border-bottom-color: rgb(89, 25, 207);
+  color: #6020d6;
 }
+
 
 #nav {
   padding: 30px;
@@ -109,7 +131,7 @@
 }
 .navbar {
   z-index: 1;
-  background-color:rgba(0, 0, 0);
+  background-color:rgb(0, 0, 0);
   border-radius: 0.2rem;
   width: 100%;
   
