@@ -11,7 +11,7 @@ const store = createStore({
     //   cart: [{
     //     product_id: 1,
     //     product_name: "아이폰 거치대",
-    //     category: "A"}]
+    //     category: "A"}],
     }
   },
   getters: {

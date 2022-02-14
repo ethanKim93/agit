@@ -6,6 +6,7 @@
         max-height="100%"
         max-width="100%"
     >
+    
         <div class="recording-modal">
             <div class="modal-header">
                 <va-button
@@ -15,7 +16,7 @@
                     @click="closeRecording"
                 ></va-button>
             </div>
-
+            <div class="recording-container">
             <!-- 영상 출력 -->
             <div id="session" v-if="session">
                 <!-- session 헤더 및 leaveSession 버튼 -->
@@ -54,6 +55,8 @@
                     <!-- @click.native="updateMainVideoStreamManager(sub)" -->
                 </div>
             </div>
+            <ChatRoom />
+            </div>
             <div class="row justify--center" v-if="session">
                 <Buttons
                     v-show="recordingStatus === 'beforeStarted'"
@@ -77,7 +80,9 @@
                 />
                 <!-- <div id="result"></div> -->
             </div>
+        
         </div>
+
     </va-modal>
 </template>
 
@@ -87,6 +92,7 @@ import UserVideo from "./UserVideo.vue";
 import Buttons from "./Buttons.vue";
 import axios from "axios";
 import * as faceapi from "face-api.js";
+import ChatRoom from './Chat/ChatRoom.vue'
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -94,6 +100,7 @@ export default {
     components: {
         UserVideo,
         Buttons,
+        ChatRoom
     },
     name: "GroupRecording",
     props: {
@@ -439,7 +446,7 @@ export default {
         console.log(state.recordingText)
         state.speechRecognizer.stop();
         clearInterval(state.interval);
-        emit("recordingStop");
+        // emit("recordingStop");
     };
 
     const saveDiary = function() {
@@ -593,6 +600,11 @@ input.btn {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.recording-container{
+    display:flex;
+    justify-content: center;
 }
 
 /* #result {
