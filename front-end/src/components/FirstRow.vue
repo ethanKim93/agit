@@ -78,7 +78,7 @@
       @closeDetail="this.moveDiaryDetail = !this.moveDiaryDetail"
     /> -->
 
-        <!-- 화면 녹화 디테일 Modal -->
+        <!-- 화면 녹화 디테일 Modal
         <DiaryRecordingDetail
             :move="moveDiaryRecordingDetail"
             :recordingUrl="recordingUrl"
@@ -86,7 +86,7 @@
             @closeDetail="
                 this.moveDiaryRecordingDetail = !this.moveDiaryRecordingDetail
             "
-        />
+        /> -->
         <!-- 방 검색 modal -->
         <va-modal v-model="showSearchModal" hide-default-actions>
             <b>방에 참여 하시겠습니까?</b>
@@ -383,7 +383,7 @@ export default {
         },
 
         leaveSession() {
-            this.moveDiaryRecordingDetail = !this.moveDiaryRecordingDetail;
+            // this.moveDiaryRecordingDetail = !this.moveDiaryRecordingDetail;
             // --- Leave the session by calling 'disconnect' method over the Session object ---
             if (this.session) this.session.disconnect();
 
